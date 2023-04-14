@@ -26,7 +26,9 @@ public class Usuario {
     @Column(name = "contraseña")
     private String contraseña;
 
-    public Usuario() {}
+    public Usuario() {
+
+    }
 
     public Long getIdUsuario() {
         return idUsuario;
