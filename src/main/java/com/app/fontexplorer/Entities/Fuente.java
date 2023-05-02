@@ -1,10 +1,14 @@
 package com.app.fontexplorer.Entities;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Fuente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_fuente")
     private Long idFuente;
 
     @Column(name = "nombre")
@@ -19,18 +23,18 @@ public class Fuente {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    @OneToMany(targetEntity = EstadistiquesFont.class, mappedBy = "fuente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OrderBy("idEstadistica")
+    private List<EstadistiquesFont> estadistiquesFont= new ArrayList<>();
 
     public Fuente() {}
 
-    public Fuente(String nombre, Double latitud, Double longitud, String descripcion, Usuario usuario) {
+    public Fuente(String nombre, Double latitud, Double longitud, String descripcion, List<EstadistiquesFont> estadistiquesFont) {
         this.nombre = nombre;
         this.latitud = latitud;
         this.longitud = longitud;
         this.descripcion = descripcion;
-        this.usuario = usuario;
+        this.estadistiquesFont = estadistiquesFont;
     }
 
     public Long getIdFuente() {
@@ -73,11 +77,11 @@ public class Fuente {
         this.descripcion = descripcion;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public List<EstadistiquesFont> getEstadistiquesFont() {
+        return estadistiquesFont;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setEstadistiquesFont(List<EstadistiquesFont> estadistiquesFont) {
+        this.estadistiquesFont = estadistiquesFont;
     }
 }
