@@ -1,6 +1,10 @@
 package com.app.fontexplorer.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -25,6 +29,11 @@ public class Usuario {
 
     @Column(name = "contraseña")
     private String contraseña;
+
+    @OneToMany(targetEntity = EstadistiquesFont.class, mappedBy = "fuente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OrderBy("idEstadistica")
+    @JsonManagedReference
+    private List<EstadistiquesFont> estadistiquesFont= new ArrayList<>();
 
     public Usuario() {
 
@@ -76,5 +85,12 @@ public class Usuario {
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
+    }
+    public List<EstadistiquesFont> getEstadistiquesFont() {
+        return estadistiquesFont;
+    }
+
+    public void setEstadistiquesFont(List<EstadistiquesFont> estadistiquesFont) {
+        this.estadistiquesFont = estadistiquesFont;
     }
 }

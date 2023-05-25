@@ -30,7 +30,7 @@ public class EstadistiquesFontController {
         return ResponseEntity.ok().body(fuente);
     }
 
-    @PostMapping("")
+    @PostMapping("/registerReview")
     public EstadistiquesFont createFuente(@RequestBody EstadistiquesFont fuente) {
         return fuenteRepository.save(fuente);
     }

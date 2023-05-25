@@ -1,8 +1,6 @@
 package com.app.fontexplorer.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,7 +11,7 @@ public class EstadistiquesFont {
     private Long idEstadistica;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "id_fuente")
     private Fuente fuente;
 
@@ -23,12 +21,18 @@ public class EstadistiquesFont {
     @Column(name = "comentarios")
     private String comentarios;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+
     public EstadistiquesFont () {}
 
-    public EstadistiquesFont( Fuente fuente, float calificacion, String comentarios) {
+    public EstadistiquesFont(Fuente fuente, float calificacion, String comentarios, Usuario usuario) {
         this.fuente = fuente;
         this.calificacion = calificacion;
         this.comentarios = comentarios;
+        this.usuario = usuario;
     }
 
     public Long getIdEstadistica() {
@@ -39,6 +43,7 @@ public class EstadistiquesFont {
         this.idEstadistica = idEstadistica;
     }
 
+    @JsonProperty("fuente")
     public Fuente getFuente() {
         return fuente;
     }
@@ -61,5 +66,13 @@ public class EstadistiquesFont {
 
     public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
+    }
+    @JsonProperty("usuario")
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

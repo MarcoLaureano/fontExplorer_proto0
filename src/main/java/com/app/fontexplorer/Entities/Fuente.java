@@ -1,4 +1,5 @@
 package com.app.fontexplorer.Entities;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Fuente {
 
     @OneToMany(targetEntity = EstadistiquesFont.class, mappedBy = "fuente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @OrderBy("idEstadistica")
+    @JsonManagedReference
     private List<EstadistiquesFont> estadistiquesFont= new ArrayList<>();
 
     public Fuente() {}
